@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: SpringAILearning
+  ai:
+    openai:
+      api-key: ${DASHSCOPE_API_KEY}
+      base-url: https://dashscope.aliyuncs.com/compatible-mode
+      chat:
+        options:
+          model: qwen3.5-flash
+logging:
+  level:
+    org.springframework.ai: debug # AI对话的日志级别
+    com.yuanyu.ai: debug # 本项目的日志级别
