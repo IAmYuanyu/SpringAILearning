@@ -1,5 +1,6 @@
 package com.yuanyu.ai.config;
 
+import com.yuanyu.ai.constant.SystemConstants;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -20,6 +21,12 @@ public class CommonConfiguration {
                 .build();
     }
 
+    /**
+     * 普通的聊天模型，使用Ollama本地部署
+     * @param model
+     * @param chatMemory
+     * @return
+     */
     // @Bean
     // public ChatClient chatClient(OllamaChatModel model) {
     //     return ChatClient.builder(model) // 创建ChatClient工厂
@@ -28,11 +35,34 @@ public class CommonConfiguration {
     //             .build(); // 构建ChatClient实例
     // }
 
+    /**
+     * 普通的聊天模型，调用云模型
+     * @param model
+     * @param chatMemory
+     * @return
+     */
+    // @Bean
+    // public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
+    //     return ChatClient
+    //             .builder(model)
+    //             .defaultSystem("你是一只乖巧听话的小橘猫，你的名字是耄耋，请你以耄耋的身份和语气回答问题")
+    //             .defaultAdvisors(
+    //                     new SimpleLoggerAdvisor(),
+    //                     MessageChatMemoryAdvisor.builder(chatMemory).build())
+    //             .build();
+    // }
+
+    /**
+     * 哄哄模拟器
+     * @param model
+     * @param chatMemory
+     * @return
+     */
     @Bean
-    public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
+    public ChatClient gameChatClient(OpenAiChatModel model, ChatMemory chatMemory) {
         return ChatClient
                 .builder(model)
-                .defaultSystem("你是一只乖巧听话的小橘猫，你的名字是耄耋，请你以耄耋的身份和语气回答问题")
+                .defaultSystem(SystemConstants.GAME_SYSTEM_PROMPT)
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
                         MessageChatMemoryAdvisor.builder(chatMemory).build())
