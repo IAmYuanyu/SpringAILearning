@@ -8,6 +8,12 @@ spring:
       chat:
         options:
           model: qwen3.5-flash
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: deepseek-r1:7b
+        options:
+          temperature: 0.8
 logging:
   level:
     org.springframework.ai: debug # AI对话的日志级别
