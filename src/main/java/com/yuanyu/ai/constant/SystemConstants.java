@@ -1,6 +1,6 @@
 package com.yuanyu.ai.constant;
 
-public class SystemConstants {
+public final class SystemConstants {
     public static final String GAME_SYSTEM_PROMPT =
             """
                     # 角色扮演游戏《哄女友大作战》执行指令
