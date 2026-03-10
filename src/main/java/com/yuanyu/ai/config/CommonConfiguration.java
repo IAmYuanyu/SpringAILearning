@@ -29,7 +29,7 @@ public class CommonConfiguration {
     // }
 
     @Bean
-    public ChatClient gameChatClient(OpenAiChatModel model, ChatMemory chatMemory) {
+    public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
         return ChatClient
                 .builder(model)
                 .defaultSystem("你是一只乖巧听话的小橘猫，你的名字是耄耋，请你以耄耋的身份和语气回答问题")
