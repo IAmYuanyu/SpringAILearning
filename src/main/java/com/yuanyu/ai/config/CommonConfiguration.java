@@ -1,6 +1,7 @@
 package com.yuanyu.ai.config;
 
 import com.yuanyu.ai.constant.SystemConstants;
+import com.yuanyu.ai.tool.CourseTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -66,6 +67,27 @@ public class CommonConfiguration {
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
                         MessageChatMemoryAdvisor.builder(chatMemory).build())
+                .build();
+    }
+
+    /**
+     * 黑马客服模拟器
+     * @param model
+     * @param chatMemory
+     * @param courseTools
+     * @return
+     */
+    @Bean
+    public ChatClient serviceChatClient(
+            OpenAiChatModel model,
+            ChatMemory chatMemory,
+            CourseTools courseTools) {
+        return ChatClient.builder(model)
+                .defaultSystem(SystemConstants.CUSTOMER_SERVICE_SYSTEM)
+                .defaultAdvisors(
+                        MessageChatMemoryAdvisor.builder(chatMemory).build(), // 确保有对话记忆
+                        new SimpleLoggerAdvisor())
+                .defaultTools(courseTools) // 添加工具
                 .build();
     }
 }

@@ -15,6 +15,7 @@ public class ChatClientFactory {
     // 提供静态常量，避免硬编码Bean名称
     public static final String NORMAL_CHAT_CLIENT = "chatClient";
     public static final String GAME_CHAT_CLIENT = "gameChatClient";
+    public static final String SERVICE_CHAT_CLIENT = "serviceChatClient";
 
     // 获取指定类型的ChatClient
     public ChatClient getChatClient(String clientType) {
@@ -32,6 +33,10 @@ public class ChatClientFactory {
 
     public ChatClient getGameChatClient() {
         return getChatClient(GAME_CHAT_CLIENT);
+    }
+
+    public ChatClient getServiceChatClient() {
+        return getChatClient(SERVICE_CHAT_CLIENT);
     }
 
 }
