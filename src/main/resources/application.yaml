@@ -12,7 +12,7 @@ spring:
       embedding:
         options:
           model: text-embedding-v3
-          dimensions: 1024 # 向量纬度
+          dimensions: 1024 # 向量纬度，设置越大计算量就越大，结果越精准。根据官网介绍进行配置
     ollama:
       base-url: http://localhost:11434
       chat:
