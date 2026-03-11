@@ -13,12 +13,12 @@ import reactor.core.publisher.Flux;
 @RequestMapping("/ai")
 @RequiredArgsConstructor
 public class GameController {
-    // private final ChatClient gameChatClient;
-    private final ChatClientFactory chatClientFactory;
+    private final ChatClient gameChatClient;
+    // private final ChatClientFactory chatClientFactory;
 
     @RequestMapping(value = "/game", produces = "text/html;charset=UTF-8")
     public Flux<String> chat(@RequestParam String prompt, @RequestParam String chatId) {
-        ChatClient gameChatClient = chatClientFactory.getGameChatClient();
+        // ChatClient gameChatClient = chatClientFactory.getGameChatClient();
         return gameChatClient.prompt()
                 .user(prompt)
                 .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, chatId))

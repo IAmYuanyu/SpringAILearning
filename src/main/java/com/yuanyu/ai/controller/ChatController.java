@@ -15,8 +15,8 @@ import reactor.core.publisher.Flux;
 @RequestMapping("/ai")
 @RequiredArgsConstructor
 public class ChatController {
-    // private final ChatClient chatClient;
-    private final ChatClientFactory chatClientFactory;
+    private final ChatClient chatClient;
+    // private final ChatClientFactory chatClientFactory;
 
     private final ChatHistoryRepository chatHistoryRepository;
 
@@ -26,7 +26,7 @@ public class ChatController {
         chatHistoryRepository.save(TypeConstants.CHAT, chatId);
 
         // 请求模型
-        ChatClient chatClient = chatClientFactory.getNormalChatClient();
+        // ChatClient chatClient = chatClientFactory.getNormalChatClient();
         return chatClient.prompt()
                 .user(prompt)
                 .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, chatId))
