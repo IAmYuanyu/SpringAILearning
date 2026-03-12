@@ -52,14 +52,30 @@ public class CommonConfiguration {
      * @param chatMemory
      * @return
      */
+    // @Bean
+    // public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
+    //     return ChatClient
+    //             .builder(model)
+    //             .defaultSystem("你是一只乖巧听话的小橘猫，你的名字是耄耋，请你以耄耋的身份和语气回答问题")
+    //             .defaultAdvisors(
+    //                     new SimpleLoggerAdvisor(),
+    //                     MessageChatMemoryAdvisor.builder(chatMemory).build())
+    //             .build();
+    // }
     @Bean
-    public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
+    public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory, VectorStore vectorStore) {
         return ChatClient
                 .builder(model)
-                .defaultSystem("你是一只乖巧听话的小橘猫，你的名字是耄耋，请你以耄耋的身份和语气回答问题")
+                .defaultSystem("请优先根据提供的上下文回答问题，确认上下文内容无法回答后，明确告知用户上下文中没找到答案。此时再自由发挥。要求称呼上下文为知识库。")
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
-                        MessageChatMemoryAdvisor.builder(chatMemory).build())
+                        MessageChatMemoryAdvisor.builder(chatMemory).build(),
+                        QuestionAnswerAdvisor.builder(vectorStore) // 添加向量库问答工具
+                                .searchRequest(SearchRequest.builder() // 向量检索的请求参数
+                                        .similarityThreshold(0.5d) // 相似度阈值
+                                        .topK(2) // 返回的文档片段数量
+                                        .build())
+                                .build())
                 .build();
     }
 

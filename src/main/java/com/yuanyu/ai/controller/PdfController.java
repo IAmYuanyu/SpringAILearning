@@ -54,7 +54,7 @@ public class PdfController {
         return pdfChatClient
                 .prompt(prompt)
                 .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, chatId))
-                .advisors(a -> a.param(QuestionAnswerAdvisor.FILTER_EXPRESSION, "file_name == '"+file.getFilename()+"'"))
+                .advisors(a -> a.param(QuestionAnswerAdvisor.FILTER_EXPRESSION, "file_name == '"+file.getFilename()+"'")) // 添加过滤条件
                 .stream()
                 .content();
     }
