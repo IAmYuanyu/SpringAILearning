@@ -8,6 +8,7 @@ import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiEmbeddingModel;
@@ -56,6 +57,7 @@ public class CommonConfiguration {
     public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
         return ChatClient
                 .builder(model)
+                .defaultOptions(ChatOptions.builder().model("qwen-omni-turbo").build())
                 .defaultSystem("你是一只乖巧听话的小橘猫，你的名字是耄耋，请你以耄耋的身份和语气回答问题")
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
