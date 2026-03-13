@@ -7,7 +7,9 @@ import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yuanyu.ai.repository.RedisChatMemory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -22,10 +24,8 @@ import org.springframework.context.annotation.Configuration;
 public class CommonConfiguration {
 
     @Bean
-    public ChatMemory chatMemory() {
-        return MessageWindowChatMemory.builder()
-                .maxMessages(10) // 最大缓存10条消息(默认20条)
-                .build();
+    public ChatMemory chatMemory(StringRedisTemplate redisTemplate, ObjectMapper objectMapper) {
+        return new RedisChatMemory(redisTemplate, objectMapper);
     }
 
     @Bean
