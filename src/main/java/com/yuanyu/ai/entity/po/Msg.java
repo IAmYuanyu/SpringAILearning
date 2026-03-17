@@ -16,12 +16,14 @@ public class Msg {
     String text;
     Map<String, Object> metadata;
 
+    // 将 Spring AI 的 Message 对象转换为 Msg 对象，提取关键信息用于持久化。
     public Msg(Message message) {
         this.messageType = message.getMessageType();
         this.text = message.getText();
         this.metadata = message.getMetadata();
     }
 
+    // 将 Msg 对象还原为 Spring AI 的 Message 对象，根据不同的消息类型创建相应的具体消息实例。
     public Message toMessage() {
         return switch (messageType) {
             case SYSTEM -> new SystemMessage(text);
